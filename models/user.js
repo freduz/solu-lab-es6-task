@@ -24,8 +24,11 @@ const userSchema = new mongoose.Schema({
   },
   mobile: {
     type: String,
-    validator(el) {
-      return validator.isMobilePhone(el, 'en-IN');
+    validate: {
+      validator(el) {
+        return validator.isMobilePhone(el, 'en-IN');
+      },
+      message: 'Please provide the valid mobile number',
     },
     required: [true, 'Please provide the mobile number'],
   },
