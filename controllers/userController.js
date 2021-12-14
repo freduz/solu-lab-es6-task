@@ -1,60 +1,16 @@
 import { User } from '../models';
-import catchAsync from '../utils/catchAsync';
+import factoryMethod from './factoryMethod';
 
 const userController = {
-  createUser: catchAsync(async (req, res) => {
-    const user = await User.create(req.body);
-    res.status(201).json({
-      status: 'success',
-      data: {
-        data: {
-          user,
-        },
-      },
-    });
-  }),
+  createUser: factoryMethod.createDocument(User),
 
-  getUser: catchAsync(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
-  }),
+  getUser: factoryMethod.getDocument(User),
 
-  updateUser: catchAsync(async (req, res) => {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        data: user,
-      },
-    });
-  }),
+  updateUser: factoryMethod.updateDocument(User),
 
-  getAllUsers: catchAsync(async (req, res) => {
-    const users = await User.find();
-    res.status(200).json({
-      status: 'success',
-      users: users.length,
-      data: {
-        data: users,
-      },
-    });
-  }),
+  getAllUsers: factoryMethod.getAllDocument(User),
 
-  deleteUser: catchAsync(async (req, res) => {
-    await User.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  }),
+  deleteUser: factoryMethod.deleteDocument(User),
 };
 
 export default userController;
